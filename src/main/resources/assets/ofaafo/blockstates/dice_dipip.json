@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "dipip_energy=0": {
+      "model": "ofaafo:block/dice_face/dice_dipip"
+    },
+    "dipip_energy=1": {
+      "model": "ofaafo:block/dice_face/dice_dipip"
+    },
+    "dipip_energy=2": {
+      "model": "ofaafo:block/dice_face/dice_redstone"
+    }
+  }
+}

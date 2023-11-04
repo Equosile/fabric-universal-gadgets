@@ -1,0 +1,11 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "up": "ofaafo:block/dice_face/dice_face_tripip",
+    "down": "ofaafo:block/dice_face/dice_face_tetrapip",
+    "north": "ofaafo:block/dice_face/dice_face_pentapip",
+    "south": "ofaafo:block/dice_face/dice_face_dipip",
+    "west": "ofaafo:block/dice_face/dice_face_monopip",
+    "east": "ofaafo:block/dice_face/dice_face_hexapip"
+  }
+}

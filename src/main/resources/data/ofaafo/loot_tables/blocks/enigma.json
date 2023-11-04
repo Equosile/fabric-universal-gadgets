@@ -1,0 +1,244 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:group",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "name": "ofaafo:enigma",
+              "weight": 333,
+              "conditions": [
+                {
+                  "condition": "minecraft:match_tool",
+                  "predicate": {
+                    "enchantments": [
+                      {
+                        "enchantment": "minecraft:silk_touch",
+                        "levels": { "min": 1 }
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "ofaafo:enigma",
+              "weight": 99,
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": { "min": 1.0, "max": 3.0 }
+                }
+              ],
+              "conditions": [
+                {
+                  "condition": "minecraft:match_tool",
+                  "predicate": {
+                    "enchantments": [
+                      {
+                        "enchantment": "minecraft:fortune",
+                        "levels": { "min": 1, "max": 3 }
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "ofaafo:enigma",
+              "weight": 99,
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": { "min": 1.0, "max": 3.0 }
+                }
+              ],
+              "conditions": [
+                {
+                  "condition": "minecraft:match_tool",
+                  "predicate": {
+                    "enchantments": [
+                      {
+                        "enchantment": "minecraft:fortune",
+                        "levels": { "min": 1, "max": 3 }
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "ofaafo:enigma",
+              "weight": 99,
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": { "min": 1.0, "max": 3.0 }
+                }
+              ],
+              "conditions": [
+                {
+                  "condition": "minecraft:match_tool",
+                  "predicate": {
+                    "enchantments": [
+                      {
+                        "enchantment": "minecraft:fortune",
+                        "levels": { "min": 1, "max": 3 }
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "ofaafo:enigma",
+              "weight": 99,
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": { "min": 1.0, "max": 3.0 }
+                }
+              ],
+              "conditions": [
+                {
+                  "condition": "minecraft:match_tool",
+                  "predicate": {
+                    "enchantments": [
+                      {
+                        "enchantment": "minecraft:fortune",
+                        "levels": { "min": 1, "max": 3 }
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "ofaafo:enigma",
+              "weight": 99,
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": { "min": 1.0, "max": 3.0 }
+                }
+              ],
+              "conditions": [
+                {
+                  "condition": "minecraft:match_tool",
+                  "predicate": {
+                    "enchantments": [
+                      {
+                        "enchantment": "minecraft:fortune",
+                        "levels": { "min": 1, "max": 3 }
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "ofaafo:enigma",
+              "weight": 99,
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": { "min": 1.0, "max": 3.0 }
+                }
+              ],
+              "conditions": [
+                {
+                  "condition": "minecraft:match_tool",
+                  "predicate": {
+                    "enchantments": [
+                      {
+                        "enchantment": "minecraft:fortune",
+                        "levels": { "min": 1, "max": 3 }
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "ofaafo:dice_monopip",
+              "weight": 1,
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": { "min": 1.0, "max": 3.0 }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "ofaafo:dice_dipip",
+              "weight": 1,
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": { "min": 1.0, "max": 3.0 }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "ofaafo:dice_tripip",
+              "weight": 1,
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": { "min": 1.0, "max": 3.0 }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "ofaafo:dice_tetrapip",
+              "weight": 1,
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": { "min": 1.0, "max": 3.0 }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "ofaafo:dice_pentapip",
+              "weight": 1,
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": { "min": 1.0, "max": 3.0 }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "ofaafo:dice_hexapip",
+              "weight": 1,
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": { "min": 1.0, "max": 3.0 }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "random_sequence": "ofaafo:blocks/dice_monopip"
+}
