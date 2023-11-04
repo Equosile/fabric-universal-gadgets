@@ -1,10 +1,22 @@
 Equosile Fabric Universal Gadgets OFAAFO
  \
-One For All All For One: One Fabric Minecraft Mod For Everything
+One For All All For One: One Fabric Minecraft Mod For Many Things
  \
 This Fabric mod is succeeded from its Bedrock Mod
  \
 (https://github.com/Equosile/-obsolete-_Equosile-Universal_Gadgets-Minecraft-Bedrock)
+<pre>
+  * Project Theme
+
+    This project (ofaafo) has been aiming at
+multiverse features including many mini games and
+convenient utilities.
+
+    That being said, since this is under early stages,
+there are many omissions not fully implemented yet.
+
+    Hopefully, there would be gradual ameliorations.
+</pre>
 * Minecraft 1.20.2 Fabric 0.14.23 (API 0.90.4)
 * One For All All For One (OFAAFO) Version 1.0.1 (2023-11-03)
   - tested on the 3rd of November 2023
