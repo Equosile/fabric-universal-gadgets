@@ -39,6 +39,8 @@ Feel free to revise, mend and so on in order to make anything better.
 Since GPLv3 licence, your dedication should be within the same GPL.
 <pre>
 </pre>
+* HOTFIX (1.0.1 -> 1.0.2 UPDATE)
+  - The Block States of Dice Blocks become much stable due to this hotfix.
 * NEW FEATURES (1.0.0 -> 1.0.1 UPDATE)
   - Independent Internal Timer aside from the existing Server Tick Event Handler
   - Dice Rolling becomes much stable.
