@@ -23,6 +23,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.intprovider.IntProvider;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
@@ -65,7 +66,7 @@ public class OFAAFO_Dice_Dipip extends ExperienceDroppingBlock {
             //SERVER + MAIN_HAND + OFF_HAND
             if (hand == Hand.MAIN_HAND) {
                 if (player.isSneaking()) {
-                    dipip_Withdraw_Redstone(state, world, pos);
+                    dipip_Withdraw_Redstone(world, pos);
 
                     double xOut = pos.getX() + 0.5;
                     double yOut = pos.getY() + 1.5;
@@ -82,6 +83,12 @@ public class OFAAFO_Dice_Dipip extends ExperienceDroppingBlock {
         }
 
         return ActionResult.SUCCESS;
+    }
+
+    @Override
+    public void onBroken(WorldAccess world, BlockPos pos, BlockState state) {
+        //super.onBroken(world, pos, state);
+        dipip_Withdraw_Redstone(pos);
     }
 
     @Override
@@ -124,88 +131,140 @@ public class OFAAFO_Dice_Dipip extends ExperienceDroppingBlock {
         }
     }
     public static void dipipRotateState(BlockState state, World world, BlockPos pos) {
-        Optional<IntProperty> oldStateProperty = getIntProperty(state, "dipip_energy");
-
-        //Debugging...
-        //dipip_debugger(world, pos, "state_property", oldStateProperty.isPresent());
-
-        if (oldStateProperty.isPresent()) {
-            IntProperty specimenTemplate = oldStateProperty.get();
-            List<Integer> valueCycle = new ArrayList<>(specimenTemplate.getValues());
-
-            int currentValue = valueCycle.indexOf(state.get(specimenTemplate));
-            int mendedValue = currentValue - 1;
-            if (mendedValue < 0) {
-                mendedValue = valueCycle.size() - 1;
-            }
+        if (world.getBlockState(pos).getBlock().equals(OFAAFO_Blocks.DICE_DIPIP)) {
 
             //Debugging...
-            //dipip_debugger(world, pos, currentValue, mendedValue);
+            //dipip_debugger(world, pos, world.getBlockState(pos).getBlock(), OFAAFO_Blocks.DICE_DIPIP);
 
-            BlockState nextEnergy = state.with(specimenTemplate, valueCycle.get(mendedValue));
-            world.setBlockState(pos, nextEnergy);
-            world.updateNeighborsAlways(pos, world.getBlockState(pos).getBlock());
+            Optional<IntProperty> oldStateProperty = getIntProperty(state, "dipip_energy");
+
+            //Debugging...
+            //dipip_debugger(world, pos, "state_property", oldStateProperty.isPresent());
+
+            if (oldStateProperty.isPresent()) {
+                IntProperty specimenTemplate = oldStateProperty.get();
+                List<Integer> valueCycle = new ArrayList<>(specimenTemplate.getValues());
+
+                int currentValue = valueCycle.indexOf(state.get(specimenTemplate));
+                int mendedValue = currentValue - 1;
+                if (mendedValue < 0) {
+                    mendedValue = valueCycle.size() - 1;
+                }
+
+                //Debugging...
+                //dipip_debugger(world, pos, currentValue, mendedValue);
+
+                BlockState nextEnergy = state.with(specimenTemplate, valueCycle.get(mendedValue));
+                world.setBlockState(pos, nextEnergy);
+                world.updateNeighborsAlways(pos, world.getBlockState(pos).getBlock());
+            }
+        } else {
+
+            //OFAAFO_Dice_Dipip.dipip_Withdraw_Redstone(world, pos);
+
+            //Debugging...
+            //dipip_debugger(world, pos, OFAAFO_Blocks.DICE_DIPIP, "absence");
+
         }
     }
     public static void dipip_Emit_Redstone(BlockState state, World world, BlockPos pos) {
-        MinecraftServer server = world.getServer();
-
-        int xPos = pos.getX();
-        int yPos = pos.getY();
-        int zPos = pos.getZ();
-        String unique_KEY_EVENT = "dipip_redstone~" + xPos + "~" + yPos + "~" + zPos;
-
-        //Debugging...
-        //dipip_debugger(world, pos, "redstone", OFAAFO_TickEvent.getTickCount());
-
-        OFAAFO_TickEvent.addPersistentEventInfo(
-                Arrays.asList(server, unique_KEY_EVENT, 10, state, world, pos)
-        );
-        OFAAFO_TickEvent.addPersistentEvent(
-                () ->
-                        dipipRotateState(state, world, pos)
-        );
-
-        //Debugging...
-        //dipip_debugger(
-        //        world, pos,
-        //        OFAAFO_TickEvent.sizeOfPersistentEvent(),
-        //        OFAAFO_TickEvent.sizeOfPersistentEventInfo()
-        //);
-    }
-    public static void dipip_Withdraw_Redstone(BlockState state, World world, BlockPos pos) {
         if (!world.isClient()) {
-            if (OFAAFO_TickEvent.sizeOfPersistentEvent() == OFAAFO_TickEvent.sizeOfPersistentEventInfo()) {
-                int num_EventLoopSize = OFAAFO_TickEvent.sizeOfPersistentEvent();
-                int index = -1;
-                for (int i = 0; i < num_EventLoopSize; i = i + 1) {
-                    Object specimen_info = OFAAFO_TickEvent.QUEUE_PERSISTENT_INFO.get(i);
+            MinecraftServer server = world.getServer();
+
+            int xPos = pos.getX();
+            int yPos = pos.getY();
+            int zPos = pos.getZ();
+            String unique_KEY_EVENT = "dipip_redstone~" + xPos + "~" + yPos + "~" + zPos;
+
+            //Debugging...
+            //dipip_debugger(world, pos, "redstone", OFAAFO_TickEvent.getTickCount());
+
+            OFAAFO_TickEvent.addPersistentEventInfo(
+                    Arrays.asList(server, unique_KEY_EVENT, 10, state, world, pos)
+            );
+            OFAAFO_TickEvent.addPersistentEvent(
+                    () ->
+                            dipipRotateState(state, world, pos)
+            );
+
+            //Debugging...
+            //dipip_debugger(
+            //        world, pos,
+            //        OFAAFO_TickEvent.sizeOfPersistentEvent(),
+            //        OFAAFO_TickEvent.sizeOfPersistentEventInfo()
+            //);
+        }
+    }
+    public static void dipip_Withdraw_Redstone(World world, BlockPos pos) {
+        if (OFAAFO_TickEvent.sizeOfPersistentEvent() == OFAAFO_TickEvent.sizeOfPersistentEventInfo()) {
+            int num_EventLoopSize = OFAAFO_TickEvent.sizeOfPersistentEvent();
+            int index = -1;
+            for (int i = 0; i < num_EventLoopSize; i = i + 1) {
+                Object specimen_info = OFAAFO_TickEvent.QUEUE_PERSISTENT_INFO.get(i);
+
+                //Debugging...
+                //dipip_debugger(world, pos, i, specimen_info);
+
+                if (specimen_info instanceof List) {
+                    List<?> item = (List<?>) specimen_info;
+                    int xEvent = pos.getX();
+                    int yEvent = pos.getY();
+                    int zEvent = pos.getZ();
+                    String keyword = "dipip_redstone~" + xEvent + "~" + yEvent + "~" + zEvent;
 
                     //Debugging...
-                    //dipip_debugger(world, pos, i, specimen_info);
+                    //dipip_debugger(world, pos, "key", keyword);
 
-                    if (specimen_info instanceof List) {
-                        List<?> item = (List<?>) specimen_info;
-                        int xEvent = pos.getX();
-                        int yEvent = pos.getY();
-                        int zEvent = pos.getZ();
-                        String keyword = "dipip_redstone~" + xEvent + "~" + yEvent + "~" + zEvent;
+                    if (item.contains(keyword)) {
 
                         //Debugging...
-                        //dipip_debugger(world, pos, "key", keyword);
+                        //dipip_debugger(world, pos, keyword, "removed");
 
-                        if (item.contains(keyword)) {
-                            index = i;
-                            OFAAFO_TickEvent.QUEUE_PERSISTENT_INFO.remove(index);
-                            OFAAFO_TickEvent.QUEUE_PERSISTENT.remove(index);
-                            break;
-                        }
+                        index = i;
+                        OFAAFO_TickEvent.QUEUE_PERSISTENT_INFO.remove(index);
+                        OFAAFO_TickEvent.QUEUE_PERSISTENT.remove(index);
+                        break;
                     }
                 }
-            } else {
-                //OFAAFO_TickEvent.QUEUE_PERSISTENT.clear();
-                //OFAAFO_TickEvent.QUEUE_PERSISTENT_INFO.clear();
             }
+        } else {
+            //OFAAFO_TickEvent.QUEUE_PERSISTENT.clear();
+            //OFAAFO_TickEvent.QUEUE_PERSISTENT_INFO.clear();
+
+            //Debugging...
+            dipip_debugger(
+                    world, pos,
+                    "withdraw.no_match." + OFAAFO_TickEvent.sizeOfPersistentEvent(),
+                    OFAAFO_TickEvent.sizeOfPersistentEventInfo()
+            );
+
+        }
+    }
+    public static void dipip_Withdraw_Redstone(BlockPos pos) {
+        if (OFAAFO_TickEvent.sizeOfPersistentEvent() == OFAAFO_TickEvent.sizeOfPersistentEventInfo()) {
+            int num_EventLoopSize = OFAAFO_TickEvent.sizeOfPersistentEvent();
+            int index = -1;
+            for (int i = 0; i < num_EventLoopSize; i = i + 1) {
+                Object specimen_info = OFAAFO_TickEvent.QUEUE_PERSISTENT_INFO.get(i);
+
+                if (specimen_info instanceof List) {
+                    List<?> item = (List<?>) specimen_info;
+                    int xEvent = pos.getX();
+                    int yEvent = pos.getY();
+                    int zEvent = pos.getZ();
+                    String keyword = "dipip_redstone~" + xEvent + "~" + yEvent + "~" + zEvent;
+
+                    if (item.contains(keyword)) {
+                        index = i;
+                        OFAAFO_TickEvent.QUEUE_PERSISTENT_INFO.remove(index);
+                        OFAAFO_TickEvent.QUEUE_PERSISTENT.remove(index);
+                        break;
+                    }
+                }
+            }
+        } else {
+            //OFAAFO_TickEvent.QUEUE_PERSISTENT.clear();
+            //OFAAFO_TickEvent.QUEUE_PERSISTENT_INFO.clear();
         }
     }
 

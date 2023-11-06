@@ -23,6 +23,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.intprovider.IntProvider;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
@@ -65,7 +66,7 @@ public class OFAAFO_Dice_Monopip extends ExperienceDroppingBlock {
             //SERVER + MAIN_HAND + OFF_HAND
             if (hand == Hand.MAIN_HAND) {
                 if (player.isSneaking()) {
-                    monopip_Withdraw_Redstone(state, world, pos);
+                    monopip_Withdraw_Redstone(pos);
 
                     double xOut = pos.getX() + 0.5;
                     double yOut = pos.getY() + 1.5;
@@ -82,6 +83,12 @@ public class OFAAFO_Dice_Monopip extends ExperienceDroppingBlock {
         }
 
         return ActionResult.SUCCESS;
+    }
+
+    @Override
+    public void onBroken(WorldAccess world, BlockPos pos, BlockState state) {
+        //super.onBroken(world, pos, state);
+        monopip_Withdraw_Redstone(pos);
     }
 
     @Override
@@ -124,66 +131,73 @@ public class OFAAFO_Dice_Monopip extends ExperienceDroppingBlock {
         }
     }
     public static void monopipRotateState(BlockState state, World world, BlockPos pos) {
-        Optional<IntProperty> oldStateProperty = getIntProperty(state, "monopip_energy");
+        if (world.getBlockState(pos).getBlock().equals(OFAAFO_Blocks.DICE_MONOPIP)) {
+            Optional<IntProperty> oldStateProperty = getIntProperty(state, "monopip_energy");
 
-        if (oldStateProperty.isPresent()) {
-            IntProperty specimenTemplate = oldStateProperty.get();
-            List<Integer> valueCycle = new ArrayList<>(specimenTemplate.getValues());
+            if (oldStateProperty.isPresent()) {
+                IntProperty specimenTemplate = oldStateProperty.get();
+                List<Integer> valueCycle = new ArrayList<>(specimenTemplate.getValues());
 
-            int currentValue = valueCycle.indexOf(state.get(specimenTemplate));
-            int mendedValue = currentValue - 1;
-            if (mendedValue < 0) {
-                mendedValue = valueCycle.size() - 1;
+                int currentValue = valueCycle.indexOf(state.get(specimenTemplate));
+                int mendedValue = currentValue - 1;
+                if (mendedValue < 0) {
+                    mendedValue = valueCycle.size() - 1;
+                }
+
+                BlockState nextEnergy = state.with(specimenTemplate, valueCycle.get(mendedValue));
+                world.setBlockState(pos, nextEnergy);
+                world.updateNeighborsAlways(pos, world.getBlockState(pos).getBlock());
             }
-
-            BlockState nextEnergy = state.with(specimenTemplate, valueCycle.get(mendedValue));
-            world.setBlockState(pos, nextEnergy);
-            world.updateNeighborsAlways(pos, world.getBlockState(pos).getBlock());
+        } else {
+            // This is of the client side where server operations don't work with.
+            // This part cannot proceed to the following commands.
+            // --(x)--> monopip_Withdraw_Redstone(world, pos);
         }
     }
     public static void monopip_Emit_Redstone(BlockState state, World world, BlockPos pos) {
-        MinecraftServer server = world.getServer();
-
-        int xPos = pos.getX();
-        int yPos = pos.getY();
-        int zPos = pos.getZ();
-        String unique_KEY_EVENT = "monopip_redstone~" + xPos + "~" + yPos + "~" + zPos;
-
-        OFAAFO_TickEvent.addPersistentEventInfo(
-                Arrays.asList(server, unique_KEY_EVENT, 10, state, world, pos)
-        );
-        OFAAFO_TickEvent.addPersistentEvent(
-                () ->
-                        monopipRotateState(state, world, pos)
-        );
-    }
-    public static void monopip_Withdraw_Redstone(BlockState state, World world, BlockPos pos) {
         if (!world.isClient()) {
-            if (OFAAFO_TickEvent.sizeOfPersistentEvent() == OFAAFO_TickEvent.sizeOfPersistentEventInfo()) {
-                int num_EventLoopSize = OFAAFO_TickEvent.sizeOfPersistentEvent();
-                int index = -1;
-                for (int i = 0; i < num_EventLoopSize; i = i + 1) {
-                    Object specimen_info = OFAAFO_TickEvent.QUEUE_PERSISTENT_INFO.get(i);
+            MinecraftServer server = world.getServer();
 
-                    if (specimen_info instanceof List) {
-                        List<?> item = (List<?>) specimen_info;
-                        int xEvent = pos.getX();
-                        int yEvent = pos.getY();
-                        int zEvent = pos.getZ();
-                        String keyword = "monopip_redstone~" + xEvent + "~" + yEvent + "~" + zEvent;
+            int xPos = pos.getX();
+            int yPos = pos.getY();
+            int zPos = pos.getZ();
+            String unique_KEY_EVENT = "monopip_redstone~" + xPos + "~" + yPos + "~" + zPos;
 
-                        if (item.contains(keyword)) {
-                            index = i;
-                            OFAAFO_TickEvent.QUEUE_PERSISTENT_INFO.remove(index);
-                            OFAAFO_TickEvent.QUEUE_PERSISTENT.remove(index);
-                            break;
-                        }
+            OFAAFO_TickEvent.addPersistentEventInfo(
+                    Arrays.asList(server, unique_KEY_EVENT, 10, state, world, pos)
+            );
+            OFAAFO_TickEvent.addPersistentEvent(
+                    () ->
+                            monopipRotateState(state, world, pos)
+            );
+        }
+    }
+    public static void monopip_Withdraw_Redstone(BlockPos pos) {
+        // This is eventually of the server operations.
+        if (OFAAFO_TickEvent.sizeOfPersistentEvent() == OFAAFO_TickEvent.sizeOfPersistentEventInfo()) {
+            int num_EventLoopSize = OFAAFO_TickEvent.sizeOfPersistentEvent();
+            int index = -1;
+            for (int i = 0; i < num_EventLoopSize; i = i + 1) {
+                Object specimen_info = OFAAFO_TickEvent.QUEUE_PERSISTENT_INFO.get(i);
+
+                if (specimen_info instanceof List) {
+                    List<?> item = (List<?>) specimen_info;
+                    int xEvent = pos.getX();
+                    int yEvent = pos.getY();
+                    int zEvent = pos.getZ();
+                    String keyword = "monopip_redstone~" + xEvent + "~" + yEvent + "~" + zEvent;
+
+                    if (item.contains(keyword)) {
+                        index = i;
+                        OFAAFO_TickEvent.QUEUE_PERSISTENT_INFO.remove(index);
+                        OFAAFO_TickEvent.QUEUE_PERSISTENT.remove(index);
+                        break;
                     }
                 }
-            } else {
-                //OFAAFO_TickEvent.QUEUE_PERSISTENT.clear();
-                //OFAAFO_TickEvent.QUEUE_PERSISTENT_INFO.clear();
             }
+        } else {
+            //OFAAFO_TickEvent.QUEUE_PERSISTENT.clear();
+            //OFAAFO_TickEvent.QUEUE_PERSISTENT_INFO.clear();
         }
     }
 
