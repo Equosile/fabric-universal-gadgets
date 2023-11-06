@@ -18,11 +18,11 @@ there are many omissions not fully implemented yet.
     Hopefully, there would be gradual ameliorations.
 </pre>
 * Minecraft 1.20.2 Fabric 0.14.23 (API 0.90.4)
-* One For All All For One (OFAAFO) Version 1.0.1 (2023-11-03)
-  - tested on the 3rd of November 2023
+* One For All All For One (OFAAFO) Version 1.0.2 (2023-11-06)
+  - tested on the 6th of November 2023
 <pre>
 </pre>
-* Licence is changed from 0BSD to GPLv3.
+* GNU GENERAL PUBLIC LICENCE VERSION 3 (GPLv3)
 <pre>
      This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
