@@ -28,7 +28,7 @@ there are many omissions not fully implemented yet.
 
     This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>. 
+    You should have received a copy of the GNU General Public License along with this program. If not, see https://www.gnu.org/licenses/. 
 </pre>
 Almost everything that I have developed is meant to be open to all the public.
  \
@@ -37,6 +37,13 @@ Feel free to revise, mend and so on in order to make anything better.
 (https://github.com/Equosile/fabric-universal-gadgets)
  \
 Since GPLv3 licence, your dedication should be within the same GPL.
+<pre>
+</pre>
+This mod (ofaafo) can also be found on Modrinth (Project ID: NMXvEDOe).
+ \
+Modrinth Gallery:
+ \
+https://modrinth.com/mod/ofaafo/gallery
 <pre>
 </pre>
 * HOTFIX (1.0.1 -> 1.0.2 UPDATE)
