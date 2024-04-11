@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "monopip_energy=0": {
+      "model": "ofaafo:block/dice_face/dice_monopip"
+    },
+    "monopip_energy=1": {
+      "model": "ofaafo:block/dice_face/dice_redstone"
+    }
+  }
+}

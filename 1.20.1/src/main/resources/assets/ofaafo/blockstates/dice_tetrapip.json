@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "tetrapip_energy=0": {
+      "model": "ofaafo:block/dice_face/dice_tetrapip"
+    },
+    "tetrapip_energy=1": {
+      "model": "ofaafo:block/dice_face/dice_tetrapip"
+    },
+    "tetrapip_energy=2": {
+      "model": "ofaafo:block/dice_face/dice_tetrapip"
+    },
+    "tetrapip_energy=3": {
+      "model": "ofaafo:block/dice_face/dice_tetrapip"
+    },
+    "tetrapip_energy=4": {
+      "model": "ofaafo:block/dice_face/dice_redstone"
+    }
+  }
+}
