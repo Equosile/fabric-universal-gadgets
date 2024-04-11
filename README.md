@@ -17,9 +17,9 @@ there are many omissions not fully implemented yet.
 
     Hopefully, there would be gradual ameliorations.
 </pre>
-* Minecraft 1.20.2 Fabric 0.14.23 (API 0.90.4)
-* One For All All For One (OFAAFO) Version 1.0.2 (2023-11-06)
-  - tested on the 6th of November 2023
+* Minecraft 1.20.1 Fabric 0.15.9 (API 0.92.1)
+* One For All All For One (OFAAFO) Version 1.0.3 (2024-04-11)
+  - tested on the 11th of April 2024
 <pre>
 </pre>
 * GNU GENERAL PUBLIC LICENCE VERSION 3 (GPLv3)
@@ -45,6 +45,16 @@ Modrinth Gallery:
  \
 https://modrinth.com/mod/ofaafo/gallery
 <pre>
+</pre>
+* CONVERSION (1.0.2 -> 1.0.3 BACKPORT)
+  - It is now backported from 1.20.2 to 1.20.1.
+  - Previously, 1.20.2 Fabric 0.14.23 API 0.90.4
+  - Now, 1.20.1 Fabric 0.15.9 API 0.92.1
+  - However, the 1.20.2 version is still being distributed as a beta testing.
+<pre>
+    Many big projects like Create Fabric have been maintained as 1.20.1.
+    This mod (OFAAFO) may pursue a convenient compatibility with those projects.
+    Therefore, the backport is fulfilled at this rate.
 </pre>
 * HOTFIX (1.0.1 -> 1.0.2 UPDATE)
   - The Block States of Dice Blocks become much stable due to this hotfix.
